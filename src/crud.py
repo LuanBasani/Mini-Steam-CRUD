@@ -1,5 +1,5 @@
 import json
-
+import os
 # Menu principal
 def menu():
     print("\n--- Mini Steam ---")
@@ -23,17 +23,29 @@ def escolher_grupo():
         print("Opção inválida!")
         return None
     
+# 1. Descobre exatamente em qual pasta este arquivo (crud.py) está (a pasta 'src')
+DIRETORIO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Volta uma pasta (para o 'CRUD_PESSOAL'), entra na pasta 'JSON' e cria o 'jogos.json'
+CAMINHO = os.path.abspath(os.path.join(DIRETORIO_SCRIPT, "..", "JSON", "jogos.json"))
+
 def ler_dados():
-    # Salva os dados em um arquivo chamado meus_jogos.json
-    try:
-        with open("jogos.json", "r", encoding="utf-8") as arquivo:
-            return json.load(arquivo)
-    except FileNotFoundError:
+    # Verifica se o arquivo existe, se não, retorna a estrutura básica
+    if not os.path.exists(CAMINHO):
         return {"biblioteca": [], "wishlist": []}
     
+    with open(CAMINHO, "r", encoding="utf-8") as arquivo:
+        try:
+            return json.load(arquivo)
+        except json.JSONDecodeError:
+            # Se o arquivo estiver vazio ou corrompido, reseta a estrutura
+            return {"biblioteca": [], "wishlist": []}
+
 def salvar_dados(dados):
-    with open("jogos.json", "w", encoding="utf-8") as arquivo:
-        json.dump(dados, arquivo, indent=2, ensure_ascii=False)
+    # Garante que as pastas do caminho existam
+    os.makedirs(os.path.dirname(CAMINHO), exist_ok=True)
+    with open(CAMINHO, "w", encoding="utf-8") as arquivo:
+        json.dump(dados, arquivo, indent=4, ensure_ascii=False)
 
 def adicionar():
     grupo = escolher_grupo()
