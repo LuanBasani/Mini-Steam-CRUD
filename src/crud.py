@@ -80,3 +80,75 @@ def listar():
             print(f"{index}. {jogo['titulo']} | Horas jogadas:{jogo[chave_info]}")
         else:
             print(f"{index}. {jogo['titulo']} | Preço: {jogo[chave_info]}")
+
+def atualizar():
+    grupo = escolher_grupo()
+    if not grupo:
+        return
+    
+    dados = ler_dados()
+
+    try:
+        index = int(input("Index do jogo para atualizar: ")) - 1
+
+        if 0 <= index < len(dados[grupo]):
+            titulo = input("Novo título do jogo: ")
+            
+            if grupo == "biblioteca":
+                info_extra = input("Atualizar horas jogadas: ")
+                tipo_info = "horas_jogadas"
+            else:
+                info_extra = input("Atualizar preço: ")
+                tipo_info = "preco"
+            
+            dados[grupo][index] = {
+                "titulo": titulo,
+                tipo_info: info_extra
+            }
+            salvar_dados(dados)
+            print("Jogo atualizado com sucesso!")
+        else:
+            print("Index inválido! Esse jogo não está na lista.")
+    except ValueError:
+        print("Por favor, digite um número válido.")
+
+def deletar():
+    grupo = escolher_grupo()
+    if not grupo:
+        return
+    
+    dados = ler_dados()
+
+    try:
+        index = int(input("Index do jogo para remover: ")) - 1
+        if 0 <= index < len(dados[grupo]):
+            jogo_removido = dados[grupo].pop(index)
+            salvar_dados(dados)
+            print(f"O jogo '{jogo_removido['titulo']}' foi removido da sua conta.")
+        else:
+            print("Index inválido!")
+    except ValueError:
+        print("Por favor, digite um número válido.")
+
+def main():
+    print("Bem-vindo ao seu Launcher de Jogos!")
+    while True:
+        menu() 
+        
+        opcao = input("Escolha uma opção: ")
+        if opcao == "1":
+            adicionar()
+        elif opcao == "2":
+            listar()
+        elif opcao == "3":
+            atualizar()
+        elif opcao == "4":
+            deletar()
+        elif opcao == "0":
+            print("Fechando a Steam... Até a próxima!")
+            break
+        else:
+            print("Opção inválida!")
+
+if __name__ == "__main__":
+    main()
