@@ -1,6 +1,5 @@
 import json
 
-
 # Menu principal
 def menu():
     print("\n--- Mini Steam ---")
@@ -27,11 +26,57 @@ def escolher_grupo():
 def ler_dados():
     # Salva os dados em um arquivo chamado meus_jogos.json
     try:
-        with open("meus_jogos.json", "r", encoding="utf-8") as arquivo:
+        with open("jogos.json", "r", encoding="utf-8") as arquivo:
             return json.load(arquivo)
     except FileNotFoundError:
         return {"biblioteca": [], "wishlist": []}
     
 def salvar_dados(dados):
-    with open("meus_jogos.json", "w", encoding="utf-8") as arquivo:
+    with open("jogos.json", "w", encoding="utf-8") as arquivo:
         json.dump(dados, arquivo, indent=2, ensure_ascii=False)
+
+def adicionar():
+    grupo = escolher_grupo()
+    
+    if not grupo:
+        return
+
+    titulo = input("Título do jogo: ")
+    
+    if grupo == "biblioteca":
+        info_extra = input("Horas jogadas (ex: 120h): ")
+        tipo_info = "horas_jogadas"
+    else:
+        info_extra = input("Preço na loja (ex: R$ 199,90): ")
+        tipo_info = "preco"
+
+    dados = ler_dados()
+    dados[grupo].append({
+        "titulo": titulo, 
+        tipo_info: info_extra
+    })
+    salvar_dados(dados)
+    print("✨ Jogo adicionado com sucesso!")
+
+def listar():
+    grupo = escolher_grupo()
+    if not grupo:
+        return
+    
+    dados = ler_dados()
+
+    print(f"\n--- Sua {grupo.capitalize()} ---")
+
+    if not dados[grupo]:
+        print("Nenhum jogo encontrado aqui.")
+        return
+
+    for index, jogo in enumerate(dados[grupo], start=1):
+        # Puxa a segunda chave do dicionário (horas_jogadas ou preco)
+        chave_info = list(jogo.keys())[1] 
+        
+        # Formata o texto dependendo de qual lista estamos olhando
+        if grupo == "biblioteca":
+            print(f"{index}. {jogo['titulo']} | Horas jogadas:{jogo[chave_info]}")
+        else:
+            print(f"{index}. {jogo['titulo']} | Preço: {jogo[chave_info]}")
