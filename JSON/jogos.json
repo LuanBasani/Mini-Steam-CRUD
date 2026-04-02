@@ -1,0 +1,54 @@
+{
+  "biblioteca": [
+    {
+      "titulo": "The Witcher 3: Wild Hunt",
+      "horas_jogadas": "120h"
+    },
+    {
+      "titulo": "EAFC 26",
+      "horas_jogadas": "86h"
+    },
+    {
+      "titulo": "Elden Ring",
+      "horas_jogadas": "85h"
+    },
+    {
+      "titulo": "Counter-Strike 2",
+      "horas_jogadas": "450h"
+    },
+    {
+      "titulo": "Dying Light 2",
+      "horas_jogadas": "60h"
+    },
+    {
+      "titulo": "Red Dead Redemption 2",
+      "horas_jogadas": "95h"
+    }
+  ],
+  "wishlist": [
+    {
+      "titulo": "Cyberpunk 2077",
+      "preco": "R$ 199,90"
+    },
+    {
+      "titulo": "Hollow Knight: Silksong",
+      "preco": "R$ 89,90"
+    },
+    {
+      "titulo": "GTA 5",
+      "preco": "R$ 349,90"
+    },
+    {
+      "titulo": "Overcooked",
+      "preco": "R$ 7,89"
+    },
+    {
+      "titulo": "God of War",
+      "preco": "R$ 89,90"
+    },
+    {
+      "titulo": "NBA 2K26",
+      "preco": "R$ 99,90"
+    }
+  ]
+}
